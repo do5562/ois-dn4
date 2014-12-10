@@ -71,13 +71,12 @@ function kreirajEHRzaBolnika() {
 
 function preberiEHRodBolnika() {
 	sessionId = getSessionId();
-
-	var ime = $("#kreirajIme").val();
-	var priimek = $("#kreirajPriimek").val();
+	
 	var stevilo = $("kreirajPartnerje").val();
 	var usmerjenost = $("kreirajUsmerjenost").val();
+	var testiranja = $("kreirajTestiranja").val();
 	
-	if (!ime || ime.trim().length == 0 || !priimek || priimek.trim().length==0 || !stevilo || !usmerjenost || stevilo.trim().length==0 || usmerjenost.trim().length==0) {
+	if (!testiranja || testiranja.trim().length == 0 || !stevilo || !usmerjenost || stevilo.trim().length==0 || usmerjenost.trim().length==0) {
 		$("#preberiSporocilo").html("<span class='obvestilo label label-warning fade-in'>Prosim vnesite zahtevane podatke!");
 	} else {
 		$.ajax({
@@ -87,13 +86,11 @@ function preberiEHRodBolnika() {
 	    	success: function (data) {
 	    		var ehrId=data.ehrId;
 	    		var partyData = {
-		            firstNames: ime,
-		            lastNames: priimek,
 		            partyAdditionalInfo: [{
 		           
 		            key: "kreirajPartnerje", value: stevilo,
-		            key: "kreirajUsmerjenost", value: usmerjenost
-		            	
+		            key: "kreirajUsmerjenost", value: usmerjenost,
+		            key: "kreirajTestiranja", value: testiranja
 		            }]
 	    		};
 	    		$.ajax({
