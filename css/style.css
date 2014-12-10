@@ -34,7 +34,9 @@ html, body{
 }
 .page-header {
     background-color:#FFCCCC;
-    opacity: 0.5;
+    -webkit-opacity: 0.25;
+    -moz-opacity: 0.25;
+    opacity: 0.25;
 }
 
 #neki {
