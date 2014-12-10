@@ -20,3 +20,10 @@ html, body{
     overflow: auto;
 }
 
+.head {
+    width: 50%;
+    height: 100%;
+    background-color: #ffb6c1;
+    
+}
+
