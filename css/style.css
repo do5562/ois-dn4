@@ -23,7 +23,7 @@ html, body{
 .head {
     width: 100%;
     height: 200%;
-    background: #ffb6c1;
+    background-color: #ffb6c1!important;
     
 }
 
