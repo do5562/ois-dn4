@@ -103,7 +103,7 @@ function preberiEHRodBolnika() {
 		            data: JSON.stringify(partyData),
 		            success: function (party) {
 		                if (party.action == 'CREATE') {
-		                    $("#kreirajSporocilo").html("<span class='obvestilo label label-success fade-in'>Uspešno kreirani podatki uporabnika '" + ehrId + "'.</span>");
+		                    $("#kreirajSporocilo1").html("<span class='obvestilo label label-success fade-in'>Uspešno kreirani podatki uporabnika '" + ehrId + "'.</span>");
 		                    console.log("Uspešno kreiran EHR '" + ehrId + "'.");
 		                    $("#preberiEHRid").val(ehrId);
 		                }
