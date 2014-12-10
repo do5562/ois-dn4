@@ -53,7 +53,7 @@ function kreirajEHRzaBolnika() {
 		            data: JSON.stringify(partyData),
 		            success: function (party) {
 		                if (party.action == 'CREATE') {
-		                    $("#kreirajSporocilo").html("<span class='obvestilo label label-success fade-in'>Uspešno kreiran EHR '" + ehrId + "'.</span>");
+		                    $("#kreirajSporocilo").html("<span class='obvestilo label label-success fade-in'>Uspešno kreiran uporabnik '" + ehrId + "'.</span>");
 		                    console.log("Uspešno kreiran EHR '" + ehrId + "'.");
 		                    $("#preberiEHRid").val(ehrId);
 		                }
@@ -75,8 +75,9 @@ function preberiEHRodBolnika() {
 	var ime = $("#kreirajIme").val();
 	var priimek = $("#kreirajPriimek").val();
 	var stevilo = $("kreirajPartnerje").val();
+	var usmerjenost = $("kreirajUsmerjenost").val();
 	
-	if (!ime || ime.trim().length == 0 || !priimek || priimek.trim().length==0) {
+	if (!ime || ime.trim().length == 0 || !priimek || priimek.trim().length==0 || !stevilo || !usmerjenost || stevilo.trim().length==0 || usmerjenost.trim().length==0) {
 		$("#preberiSporocilo").html("<span class='obvestilo label label-warning fade-in'>Prosim vnesite zahtevane podatke!");
 	} else {
 		$.ajax({
@@ -84,15 +85,34 @@ function preberiEHRodBolnika() {
 			type: 'POST',
 		//	headers: {"Ehr-Session": sessionId},
 	    	success: function (data) {
+	    		var ehrId=data.ehrId;
 	    		var partyData = {
 		            firstNames: ime,
 		            lastNames: priimek,
 		            partyAdditionalInfo: [{
 		           
-		            key: "kreirajPartnerje", value: stevilo
+		            key: "kreirajPartnerje", value: stevilo,
+		            key: "kreirajUsmerjenost", value: usmerjenost
 		            	
 		            }]
-	    		}; 
+	    		};
+	    		$.ajax({
+		            url: baseUrl + "/demographics/party",
+		            type: 'POST',
+		            contentType: 'application/json',
+		            data: JSON.stringify(partyData),
+		            success: function (party) {
+		                if (party.action == 'CREATE') {
+		                    $("#kreirajSporocilo").html("<span class='obvestilo label label-success fade-in'>Uspešno kreirani podatki uporabnika '" + ehrId + "'.</span>");
+		                    console.log("Uspešno kreiran EHR '" + ehrId + "'.");
+		                    $("#preberiEHRid").val(ehrId);
+		                }
+		            },
+		            error: function(err) {
+		            	$("#kreirajSporocilo").html("<span class='obvestilo label label-danger fade-in'>Napaka '" + JSON.parse(err.responseText).userMessage + "'!");
+		            	console.log(JSON.parse(err.responseText).userMessage);
+		            }
+		        }); 
 				/*var party = data.party;
 				$("#preberiSporocilo").html("<span class='obvestilo label label-success fade-in'>Bolnik '" + party.firstNames + " " + party.lastNames + "', ki se je rodil '" + party.dateOfBirth + "'.</span>");
 				console.log("Bolnik '" + party.firstNames + " " + party.lastNames + "', ki se je rodil '" + party.dateOfBirth + "'.");
