@@ -70,20 +70,32 @@ function kreirajEHRzaBolnika() {
 function preberiEHRodBolnika() {
 	sessionId = getSessionId();
 
-	var ehrId = $("#preberiEHRid").val();
-
-	if (!ehrId || ehrId.trim().length == 0) {
-		$("#preberiSporocilo").html("<span class='obvestilo label label-warning fade-in'>Prosim vnesite zahtevan podatek!");
+	var ime = $("#kreirajIme").val();
+	var priimek = $("#kreirajPriimek").val();
+	var stevilo = $("kreirajPartnerje").val();
+	
+	if (!ime || ime.trim().length == 0 || !priimek || priimek.trim().length==0) {
+		$("#preberiSporocilo").html("<span class='obvestilo label label-warning fade-in'>Prosim vnesite zahtevane podatke!");
 	} else {
 		$.ajax({
-			url: baseUrl + "/demographics/ehr/" + ehrId + "/party",
-			type: 'GET',
-			headers: {"Ehr-Session": sessionId},
+			url: baseUrl + "/demographics/ehr/" + ime + "/party",
+			type: 'POST',
+		//	headers: {"Ehr-Session": sessionId},
 	    	success: function (data) {
-				var party = data.party;
+	    		var partyData = {
+		            firstNames: ime,
+		            lastNames: priimek,
+		            partyAdditionalInfo: [{
+		           
+		            key: "kreirajPartnerje", value: stevilo
+		            	
+		            }]
+	    		}; 
+				/*var party = data.party;
 				$("#preberiSporocilo").html("<span class='obvestilo label label-success fade-in'>Bolnik '" + party.firstNames + " " + party.lastNames + "', ki se je rodil '" + party.dateOfBirth + "'.</span>");
 				console.log("Bolnik '" + party.firstNames + " " + party.lastNames + "', ki se je rodil '" + party.dateOfBirth + "'.");
-			},
+			*/
+	    	},
 			error: function(err) {
 				$("#preberiSporocilo").html("<span class='obvestilo label label-danger fade-in'>Napaka '" + JSON.parse(err.responseText).userMessage + "'!");
 				console.log(JSON.parse(err.responseText).userMessage);
