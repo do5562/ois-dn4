@@ -22,8 +22,10 @@ function kreirajEHRzaBolnika() {
 	var ime = $("#kreirajIme").val();
 	var priimek = $("#kreirajPriimek").val();
 	var datumRojstva = $("#kreirajDatumRojstva").val();
+	var datumTestiranja = $("#kreirajDatumTestiranja").val();
+	var spol = $("#kreirajSpol").val();
 
-	if (!ime || !priimek || !datumRojstva || ime.trim().length == 0 || priimek.trim().length == 0 || datumRojstva.trim().length == 0) {
+	if (!ime || !priimek || !datumRojstva || !datumTestiranja || !spol ||spol.trim().length==0|| ime.trim().length == 0 || priimek.trim().length == 0 || datumRojstva.trim().length == 0 || datumTestiranja.trim().length==0) {
 		$("#kreirajSporocilo").html("<span class='obvestilo label label-warning fade-in'>Prosim vnesite zahtevane podatke!</span>");
 	} else {
 		$.ajaxSetup({
@@ -38,6 +40,8 @@ function kreirajEHRzaBolnika() {
 		            firstNames: ime,
 		            lastNames: priimek,
 		            dateOfBirth: datumRojstva,
+		            gender: spol,
+		            dateOfDeath: datumTestiranja,
 		            partyAdditionalInfo: [{key: "ehrId", value: ehrId}]
 		        };
 		        $.ajax({
