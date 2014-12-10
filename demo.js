@@ -41,8 +41,10 @@ function kreirajEHRzaBolnika() {
 		            lastNames: priimek,
 		            dateOfBirth: datumRojstva,
 		            gender: spol,
-		            dateOfDeath: datumTestiranja,
-		            partyAdditionalInfo: [{key: "ehrId", value: ehrId}]
+		            partyAdditionalInfo: [{
+		            	key: "ehrId", value: ehrId,
+		            	key: "kreirajDatumTestiranja", value: datumTestiranja
+		            }]
 		        };
 		        $.ajax({
 		            url: baseUrl + "/demographics/party",
